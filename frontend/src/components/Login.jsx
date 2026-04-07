@@ -24,15 +24,18 @@ export default function Login() {
             const user = res.data.user;
             localStorage.setItem('user', JSON.stringify(user));
 
-            // ✅ Move navigation INSIDE
-            if (user.role === 'Admin') navigate('/it');
-            else if (user.role === 'HR') navigate('/hr');
-            else navigate('/user');
+            if (user.role === 'Admin') {
+                navigate('/it');
+            } else if (user.role === 'HR') {
+                navigate('/hr');
+            } else {
+                navigate('/user');
+            }
         } else {
             setError('Invalid credentials');
         }
 
-    catch (err) {
+    } catch (err) {
         setError(err.response?.data?.message || 'Login failed. Please check credentials.');
     }
 };
