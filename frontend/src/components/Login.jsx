@@ -17,28 +17,30 @@ console.log("API URL:", API_URL);
     try {
         const API_URL = import.meta.env.VITE_API_URL;
 
+        alert("API URL: " + API_URL); // 👈 SHOWS if env works
+
         const res = await axios.post(`${API_URL}/api/login`, {
             email,
             password
         });
 
+        alert("Response: " + JSON.stringify(res.data)); // 👈 SHOWS backend response
+
         if (res.data.success) {
             const user = res.data.user;
             localStorage.setItem('user', JSON.stringify(user));
 
-            if (user.role === 'Admin') {
-                navigate('/it');
-            } else if (user.role === 'HR') {
-                navigate('/hr');
-            } else {
-                navigate('/user');
-            }
+            if (user.role === 'Admin') navigate('/it');
+            else if (user.role === 'HR') navigate('/hr');
+            else navigate('/user');
         } else {
             setError('Invalid credentials');
         }
 
     } catch (err) {
-        setError(err.response?.data?.message || 'Login failed. Please check credentials.');
+        alert("ERROR: " + err); // 👈 CRITICAL
+        console.log(err);
+        setError('Login failed');
     }
 };
 
