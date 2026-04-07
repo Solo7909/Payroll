@@ -7,9 +7,7 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const API_URL = import.meta.env.VITE_API_URL;
-console.log("API URL:", API_URL);
-
+    const API_URL = "https://payroll-backend-yg7n.onrender.com";
     const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
