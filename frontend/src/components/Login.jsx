@@ -13,14 +13,12 @@ export default function Login() {
     setError('');
 
     try {
-        const API_URL = import.meta.env.VITE_API_URL;
+        const API_URL = "https://payroll-backend-yg7n.onrender.com";
 
-        alert("API URL: " + API_URL); // 👈 SHOWS if env works
-
-        const res = await axios.post(`${API_URL}/api/login`, {
-            email,
-            password
-        });
+const res = await axios.post(`${API_URL}/api/login`, {
+  email,
+  password
+});
 
         alert("Response: " + JSON.stringify(res.data)); // 👈 SHOWS backend response
 
