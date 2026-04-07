@@ -23,8 +23,7 @@ export default function Login() {
                 else if (user.role === 'HR') navigate('/hr');
                 else navigate('/user');
             }
-        } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please check credentials.');
+        
         }
     };
 
