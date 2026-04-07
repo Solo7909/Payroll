@@ -13,11 +13,20 @@ export default function Login() {
         setError('');
 
         try {
-            // Use our backend endpoint
-            const res = await axios.post('http://localhost:5001/api/login', { email, password });
-            if (res.data.success) {
-                const user = res.data.user;
-                localStorage.setItem('user', JSON.stringify(user));
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const res = await axios.post(`${API_URL}/api/login`, {
+    email,
+    password
+  });
+
+  if (res.data.success) {
+    const user = res.data.user;
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+} catch (err) {
+  console.error(err);
+}
 
                 if (user.role === 'Admin') navigate('/it');
                 else if (user.role === 'HR') navigate('/hr');
