@@ -37,14 +37,6 @@ export default function Login() {
     }
 };
 
-                if (user.role === 'Admin') navigate('/it');
-                else if (user.role === 'HR') navigate('/hr');
-                else navigate('/user');
-            }
-        } catch (err) {
-            setError(err.response?.data?.message || 'Login failed. Please check credentials.');
-        }
-    };
 
     return (
         <div className="auth-container">
