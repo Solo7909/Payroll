@@ -8,21 +8,27 @@ app.use(cors());
 app.use(express.json());
 
 // ─── AUTH ────────────────────────────────────────────
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
-    try {
-        const { rows } = await pool.query('SELECT * FROM employees WHERE email = $1', [email]);
-        const user = rows[0];
 
-        if (user && user.password === password) {
-            res.json({ success: true, user: { ...user, basicPay: user.basicpay, joinDate: user.joinDate } });
-        } else {
-            res.status(401).json({ success: false, message: 'Invalid credentials' });
-        }
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    // Temporary users
+    const users = [
+        { email: 'it@test.com', password: 'password123', role: 'Admin' },
+        { email: 'hr@test.com', password: 'password123', role: 'HR' },
+        { email: 'user@test.com', password: 'password123', role: 'User' }
+    ];
+
+    const user = users.find(
+        u => u.email === email && u.password === password
+    );
+
+    if (user) {
+        res.json({ success: true, user });
+    } else {
+        res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 });
+    
 
 // ─── EMPLOYEES ───────────────────────────────────────
 
