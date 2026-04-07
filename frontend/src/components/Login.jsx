@@ -9,26 +9,33 @@ export default function Login() {
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        setError('');
+    e.preventDefault();
+    setError('');
 
-        try {
-  const API_URL = import.meta.env.VITE_API_URL;
+    try {
+        const API_URL = import.meta.env.VITE_API_URL;
 
-  const API_URL = import.meta.env.VITE_API_URL;
+        const res = await axios.post(`${API_URL}/api/login`, {
+            email,
+            password
+        });
 
-const res = await axios.post(`${API_URL}/api/login`, {
-  email,
-  password
-});
+        if (res.data.success) {
+            const user = res.data.user;
+            localStorage.setItem('user', JSON.stringify(user));
 
-  if (res.data.success) {
-    const user = res.data.user;
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-} catch (err) {
-  console.error(err);
-}
+            // ✅ Move navigation INSIDE
+            if (user.role === 'Admin') navigate('/it');
+            else if (user.role === 'HR') navigate('/hr');
+            else navigate('/user');
+        } else {
+            setError('Invalid credentials');
+        }
+
+    } catch (err) {
+        setError(err.response?.data?.message || 'Login failed. Please check credentials.');
+    }
+};
 
                 if (user.role === 'Admin') navigate('/it');
                 else if (user.role === 'HR') navigate('/hr');
