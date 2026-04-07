@@ -35,7 +35,7 @@ export default function Login() {
             setError('Invalid credentials');
         }
 
-     catch (err) {
+    }catch (err) {
         setError(err.response?.data?.message || 'Login failed. Please check credentials.');
     }
 };
